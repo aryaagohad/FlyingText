@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repel Text</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: black;
+      overflow: hidden;
+    }
+    #text {
+      position: absolute;
+      font-size: 50px;
+      font-weight: bold;
+      color: white;
+      transition: transform 0.2s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div id="text">MICROREST</div>
+
+  <script>
+    const text = document.getElementById('text');
+
+    document.addEventListener('mousemove', (e) => {
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+      const textRect = text.getBoundingClientRect();
+      const textX = textRect.left + textRect.width / 2;
+      const textY = textRect.top + textRect.height / 2;
+
+      const dx = mouseX - textX;
+      const dy = mouseY - textY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < 200) {
+        const angle = Math.atan2(dy, dx);
+        const repelDistance = 200 - distance;
+        const offsetX = Math.cos(angle) * repelDistance;
+        const offsetY = Math.sin(angle) * repelDistance;
+
+        text.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+      } else {
+        text.style.transform = 'translate(0, 0)';
+      }
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
